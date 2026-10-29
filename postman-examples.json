@@ -1,0 +1,69 @@
+{
+  "info": {
+    "name": "CRM Enquiry API Examples",
+    "description": "Example requests for importing or recreating requests in Postman.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000" },
+    { "key": "token", "value": "PASTE_JWT_TOKEN_HERE" },
+    { "key": "enquiryId", "value": "PASTE_ENQUIRY_ID_HERE" }
+  ],
+  "item": [
+    {
+      "name": "Health check",
+      "request": { "method": "GET", "url": "{{baseUrl}}/api/health" }
+    },
+    {
+      "name": "Register employee",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Asha Sharma\",\"email\":\"asha@example.com\",\"password\":\"StrongPassword123\"}" },
+        "url": "{{baseUrl}}/api/auth/register"
+      }
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"email\":\"asha@example.com\",\"password\":\"StrongPassword123\"}" },
+        "url": "{{baseUrl}}/api/auth/login"
+      }
+    },
+    {
+      "name": "Create public enquiry",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Rahul Kumar\",\"email\":\"rahul@example.com\",\"phone\":\"9876543210\",\"courseInterest\":\"Full Stack Development\",\"message\":\"Please share details.\",\"source\":\"website\"}" },
+        "url": "{{baseUrl}}/api/enquiries"
+      }
+    },
+    {
+      "name": "Get unclaimed enquiries",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/enquiries/unclaimed?page=1&limit=20"
+      }
+    },
+    {
+      "name": "Claim enquiry",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/enquiries/{{enquiryId}}/claim"
+      }
+    },
+    {
+      "name": "Get my enquiries",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/api/enquiries/mine?page=1&limit=20"
+      }
+    }
+  ]
+}
